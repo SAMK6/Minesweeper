@@ -15,10 +15,15 @@ date Feb 6, 2024
 
 using namespace std;
 
-int main(int argc, char* argv[]){
-	
-	QApplication app(argc, argv);
+
+
+
+int mineSweeper(int numArgs, char* args[]){
+
+
+	QApplication app(numArgs, args);
 	MainWindow GameWindow;
+
     GameWindow.setGeometry(200, 200, 1500, 800);
 	GameWindow.setFixedSize(1500, 800);
 	GameWindow.show();
@@ -26,6 +31,14 @@ int main(int argc, char* argv[]){
 	
 	
 	return app.exec();
-	
+
 }
 
+
+
+
+int main(int argc, char* argv[]){
+	
+	return mineSweeper(argc, argv);
+	
+}

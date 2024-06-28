@@ -11,6 +11,7 @@ date Feb 6, 2024
 #include <QPushButton>
 #include <QGridLayout>
 #include <QMouseEvent>
+#include <QIcon>
 #include <iostream>
 #include <random>
 #include <vector>
@@ -26,23 +27,25 @@ MainWindow :: MainWindow(QWidget *parent) : QMainWindow(parent){
     mt19937 gen(rd());
 
 	// generating a list of positions will the bombs will be
-	while (bombPositions.size() < 99) {
+	while (bombPositions.size() < (long unsigned int)NUM_BOMBS) {
         int random_integer = uniform_int_distribution<int>(0, 480)(gen);
         bombPositions.insert(random_integer);
     }
+
 
 	// Create the button grid, make "this" the parent
 	buttons = new QGridLayout(this);
 	
 	// loop over the buttons and ad them to to the grid
-	for(int i = 0; i < 16; i++){
-		for(int j = 0; j < 30; j++){
+	for(int i = 0; i < ROWS; i++){
+		for(int j = 0; j < COLUMNS; j++){
 			
 			// make the button
 			MyButton* button = new MyButton(this);
 			
 			// set size and location of the button
 			button->setGeometry(QRect(QPoint(j * BUTTON_SIZE, i * BUTTON_SIZE), QSize(BUTTON_SIZE, BUTTON_SIZE)));
+			button->setStyleSheet(QString("QPushButton {    background-color: #f0f0f0;    border: %1px solid #333333;   }").arg(BUTTON_BORDER_SIZE));
 			
 			// Connect button signal to appropriate slot
 			connect(button, &MyButton::leftClicked, this, &MainWindow::handleLeftButton);
@@ -56,12 +59,14 @@ MainWindow :: MainWindow(QWidget *parent) : QMainWindow(parent){
 			button->setProperty("isFlagged", 0);
 			
 			
-			// add the 
+			// add the button to the layout
 			buttons->addWidget(button, i, j);
 			
 		}
+
+
 	}
-  
+  	
   
 }
 
@@ -76,7 +81,7 @@ void MainWindow :: clear_empty_tiles(QPushButton* button){
 	// indicies for the button 
 	int row = button->property("row").toInt();
 	int column = button->property("column").toInt();
-	int position = 30 * row + column;
+	int position = COLUMNS * row + column;
 	button->setProperty("isPressed", 1);
 	
 	// will fill up adjacent with the positions we could check
@@ -121,15 +126,15 @@ void MainWindow :: clear_empty_tiles(QPushButton* button){
 	if(numAdjacent == 0){
 		
 		// set it to grey to mark it as 0
-		button->setStyleSheet("background-color: #C0C0C0; border: none;"); // Set background color to red
+		button->setStyleSheet(QString("QPushButton {  background-color: #C0C0C0;    border: %1px solid #333333;    color: #0000cc;   }").arg(BUTTON_BORDER_SIZE));
 	
 		for (int num : adjacentTiles){
 			
 			int row, column;
 			
 			// calculate the row and column of the button based on its flattened position
-			row = (num - (num % 30))/30;
-			column = num % 30;
+			row = (num - (num % COLUMNS))/COLUMNS;
+			column = num % COLUMNS;
 			
 			// get the pointer to the button
 			QLayoutItem* item = buttons->itemAtPosition(row, column);
@@ -144,36 +149,41 @@ void MainWindow :: clear_empty_tiles(QPushButton* button){
 		
 	}
 	else{
-		// setting the colours for the numbers basically guessed these
-		if(numAdjacent == 1){
-			button->setStyleSheet("color: #0000cc;");
-		}
-		else if(numAdjacent == 2){
-			button->setStyleSheet("color: #008000;");
-		}
-		else if(numAdjacent == 3){
-			button->setStyleSheet("color: #cc0000;");
-		}
-		else if(numAdjacent == 4){
-			button->setStyleSheet("color: #9900bb;");
-		}
-		else if(numAdjacent == 5){
-			button->setStyleSheet("color: #000080;");
-		}
-		else if(numAdjacent == 6){
-			button->setStyleSheet("color: #008080;");
-		}
-		else if(numAdjacent == 7){
-			button->setStyleSheet("color: #ff8c00;");
-		}
-		else if(numAdjacent == 8){
-			button->setStyleSheet("color: #808080;");
+		// setting the colours for the numbers basically guessed these colours
+
+		switch(numAdjacent){
+
+			case 1:
+				button->setStyleSheet(QString("QPushButton {    font-weight: bold;    background-color: #f0f0f0;    border: %1px solid #333333;    color: #0000cc;   }").arg(BUTTON_BORDER_SIZE));
+				break;
+			case 2:
+				button->setStyleSheet(QString("QPushButton {    font-weight: bold;    background-color: #f0f0f0;    border: %1px solid #333333;    color: #008000;   }").arg(BUTTON_BORDER_SIZE));
+				break;
+			case 3:
+				button->setStyleSheet(QString("QPushButton {    font-weight: bold;    background-color: #f0f0f0;    border: %1px solid #333333;    color: #cc0000;   }").arg(BUTTON_BORDER_SIZE));
+				break;
+			case 4:
+				button->setStyleSheet(QString("QPushButton {    font-weight: bold;    background-color: #f0f0f0;    border: %1px solid #333333;    color: #9900bb;   }").arg(BUTTON_BORDER_SIZE));
+				break;
+			case 5:
+				button->setStyleSheet(QString("QPushButton {    font-weight: bold;    background-color: #f0f0f0;    border: %1px solid #333333;    color: #000080;   }").arg(BUTTON_BORDER_SIZE));
+				break;
+			case 6:
+				button->setStyleSheet(QString("QPushButton {    font-weight: bold;    background-color: #f0f0f0;    border: %1px solid #333333;    color: #008080;   }").arg(BUTTON_BORDER_SIZE));
+				break;
+			case 7:
+				button->setStyleSheet(QString("QPushButton {    font-weight: bold;    background-color: #f0f0f0;    border: %1px solid #333333;    color: #ff8c00;   }").arg(BUTTON_BORDER_SIZE));
+				break;
+			case 8:
+				button->setStyleSheet(QString("QPushButton {    font-weight: bold;    background-color: #f0f0f0;    border: %1px solid #333333;    color: #808080;   }").arg(BUTTON_BORDER_SIZE));
+				break;
+		
 		}
 		
 		// now set the text
 		string numBombs = to_string(numAdjacent);
 		button->setText(QString::fromStdString(numBombs));
-		return;
+
 	}
 	
 	return;
@@ -203,6 +213,9 @@ void MainWindow :: handleRightButton(){
 		}
 		else{
 			button->setIcon(QIcon("mine_flag.png"));
+			QSize buttonSize = button->size();
+			QSize iconSize(buttonSize.width() - 2 * BUTTON_BORDER_SIZE, buttonSize.height() - 2 * BUTTON_BORDER_SIZE);
+			button->setIconSize(iconSize);
 			button->setProperty("isFlagged", 1);
 		}
 	}
@@ -226,7 +239,7 @@ void MainWindow :: handleLeftButton(){
 				
 		row = button->property("row").toInt();
 		column = button->property("column").toInt();
-		position = 30 * row + column;
+		position = COLUMNS * row + column;
 		
 	}
 	else{
@@ -241,6 +254,9 @@ void MainWindow :: handleLeftButton(){
 	if (it != bombPositions.end()){
 		
 		button->setIcon(QIcon("bomb_explode.png"));
+		QSize buttonSize = button->size();
+		QSize iconSize(buttonSize.width() - 2 * BUTTON_BORDER_SIZE, buttonSize.height() - 2 * BUTTON_BORDER_SIZE);
+		button->setIconSize(iconSize);
 		button->setProperty("isPressed", 1);
 		
 		QDialog dialog;

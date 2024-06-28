@@ -32,6 +32,10 @@ private:
 	
 	QGridLayout* buttons;
 	const int BUTTON_SIZE = 50;
+	const int BUTTON_BORDER_SIZE = 2;
+	const int NUM_BOMBS = 99;
+	const int ROWS = 16;
+	const int COLUMNS = 30;
 	set<int> bombPositions;
 	
 };
