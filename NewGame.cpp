@@ -60,8 +60,8 @@ NewGame :: NewGame(QWidget* parent) : QMainWindow(parent){
     QScreen *primaryScreen = QGuiApplication::primaryScreen();
     QRect screenGeometry = primaryScreen->geometry();
 
-    int x = screenGeometry.center().x() - width() / 2;
-    int y = screenGeometry.center().y() - height() / 2;
+    int x = screenGeometry.center().x() - WINDOW_WIDTH / 2;
+    int y = screenGeometry.center().y() - WINDOW_HEIGHT / 2;
 
     this->setGeometry(x, y, WINDOW_WIDTH, WINDOW_HEIGHT);
 
