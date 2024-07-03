@@ -30,6 +30,7 @@ MenuScreen :: MenuScreen(QWidget *parent) : QMainWindow(parent){
     QWidget *centralWidget = new QWidget(this);
     centralWidget->setLayout(menu);
     setCentralWidget(centralWidget);
+    this->setGeometry(300, 300, 400, 200);
 
 }
 
@@ -44,7 +45,7 @@ void MenuScreen :: startGame(){
     GameWindow->show();
 
     close();
-    
+
 }
 
 

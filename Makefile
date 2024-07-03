@@ -55,16 +55,20 @@ OBJECTS_DIR   = ./
 SOURCES       = MainWindow.cpp \
 		MenuScreen.cpp \
 		minesweeper.cpp \
-		MyButton.cpp moc_MainWindow.cpp \
+		MyButton.cpp \
+		NewGame.cpp moc_MainWindow.cpp \
 		moc_MenuScreen.cpp \
-		moc_MyButton.cpp
+		moc_MyButton.cpp \
+		moc_NewGame.cpp
 OBJECTS       = MainWindow.o \
 		MenuScreen.o \
 		minesweeper.o \
 		MyButton.o \
+		NewGame.o \
 		moc_MainWindow.o \
 		moc_MenuScreen.o \
-		moc_MyButton.o
+		moc_MyButton.o \
+		moc_NewGame.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/common/linux.conf \
@@ -131,10 +135,12 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/lex.prf \
 		Minesweeper.pro MainWindow.h \
 		MenuScreen.h \
-		MyButton.h MainWindow.cpp \
+		MyButton.h \
+		NewGame.h MainWindow.cpp \
 		MenuScreen.cpp \
 		minesweeper.cpp \
-		MyButton.cpp
+		MyButton.cpp \
+		NewGame.cpp
 QMAKE_TARGET  = Minesweeper
 DESTDIR       = 
 TARGET        = Minesweeper
@@ -298,8 +304,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents MainWindow.h MenuScreen.h MyButton.h $(DISTDIR)/
-	$(COPY_FILE) --parents MainWindow.cpp MenuScreen.cpp minesweeper.cpp MyButton.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents MainWindow.h MenuScreen.h MyButton.h NewGame.h $(DISTDIR)/
+	$(COPY_FILE) --parents MainWindow.cpp MenuScreen.cpp minesweeper.cpp MyButton.cpp NewGame.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -331,9 +337,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -Wall -Wextra -fPIC -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_MainWindow.cpp moc_MenuScreen.cpp moc_MyButton.cpp
+compiler_moc_header_make_all: moc_MainWindow.cpp moc_MenuScreen.cpp moc_MyButton.cpp moc_NewGame.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_MainWindow.cpp moc_MenuScreen.cpp moc_MyButton.cpp
+	-$(DEL_FILE) moc_MainWindow.cpp moc_MenuScreen.cpp moc_MyButton.cpp moc_NewGame.cpp
 moc_MainWindow.cpp: MainWindow.h \
 		MyButton.h \
 		moc_predefs.h \
@@ -352,6 +358,13 @@ moc_MyButton.cpp: MyButton.h \
 		/usr/lib/qt6/libexec/moc
 	/usr/lib/qt6/libexec/moc $(DEFINES) --include /home/sam/Desktop/Minesweeper/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -I/home/sam/Desktop/Minesweeper -I/home/sam/Desktop/Minesweeper -I/usr/include/x86_64-linux-gnu/qt6 -I/usr/include/x86_64-linux-gnu/qt6/QtWidgets -I/usr/include/x86_64-linux-gnu/qt6/QtGui -I/usr/include/x86_64-linux-gnu/qt6/QtCore -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include MyButton.h -o moc_MyButton.cpp
 
+moc_NewGame.cpp: NewGame.h \
+		MainWindow.h \
+		MyButton.h \
+		moc_predefs.h \
+		/usr/lib/qt6/libexec/moc
+	/usr/lib/qt6/libexec/moc $(DEFINES) --include /home/sam/Desktop/Minesweeper/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -I/home/sam/Desktop/Minesweeper -I/home/sam/Desktop/Minesweeper -I/usr/include/x86_64-linux-gnu/qt6 -I/usr/include/x86_64-linux-gnu/qt6/QtWidgets -I/usr/include/x86_64-linux-gnu/qt6/QtGui -I/usr/include/x86_64-linux-gnu/qt6/QtCore -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include NewGame.h -o moc_NewGame.cpp
+
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
@@ -369,7 +382,8 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 ####### Compile
 
 MainWindow.o: MainWindow.cpp MyButton.h \
-		MainWindow.h
+		MainWindow.h \
+		NewGame.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MainWindow.o MainWindow.cpp
 
 MenuScreen.o: MenuScreen.cpp MainWindow.h \
@@ -385,6 +399,11 @@ minesweeper.o: minesweeper.cpp MainWindow.h \
 MyButton.o: MyButton.cpp MyButton.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MyButton.o MyButton.cpp
 
+NewGame.o: NewGame.cpp MainWindow.h \
+		MyButton.h \
+		MenuScreen.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o NewGame.o NewGame.cpp
+
 moc_MainWindow.o: moc_MainWindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_MainWindow.o moc_MainWindow.cpp
 
@@ -393,6 +412,9 @@ moc_MenuScreen.o: moc_MenuScreen.cpp
 
 moc_MyButton.o: moc_MyButton.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_MyButton.o moc_MyButton.cpp
+
+moc_NewGame.o: moc_NewGame.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_NewGame.o moc_NewGame.cpp
 
 ####### Install
 

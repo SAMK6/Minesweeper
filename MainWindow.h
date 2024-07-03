@@ -30,7 +30,7 @@ class MainWindow : public QMainWindow {
 public:
 
 	explicit MainWindow(QWidget *parent = nullptr);
-	
+
 private slots:
 	void handleRightButton();
 	void handleLeftButton();

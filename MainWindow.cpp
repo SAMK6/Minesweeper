@@ -17,6 +17,7 @@ date Feb 6, 2024
 #include <set>
 #include "MyButton.h"
 #include "MainWindow.h"
+#include "NewGame.h"
 
 using namespace std;
 
@@ -263,16 +264,8 @@ void MainWindow :: handleLeftButton(){
 		button->setIconSize(iconSize);
 		button->setProperty("isPressed", 1);
 		
-		QDialog dialog;
-
-		// Set dialog title
-		dialog.setWindowTitle("Uh-Oh");
-		dialog.resize(420, 100);
-
-		// Create widgets for the dialoge it says when compiling that this line is not needed but it is 
-		QLabel *label = new QLabel("You hit a bomb and exploded", &dialog);
-		
-		dialog.exec();
+		NewGame* newGameMenu = new NewGame(nullptr);
+		newGameMenu->show();
 		
 		close();
 		
