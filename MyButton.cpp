@@ -5,12 +5,11 @@ date Feb 6, 2024
 
 */
 
-
 #include <QtWidgets>
-#include <MyButton.h>
+#include <QPushButton>
+#include <QMouseEvent>
+#include "MyButton.h"
 
-
-using namespace std;
 
 MyButton :: MyButton(QWidget* parent) : QPushButton(parent){
 	

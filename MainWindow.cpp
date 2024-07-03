@@ -5,18 +5,18 @@ date Feb 6, 2024
 
 */
 
-#include <QtGui>
-#include <QApplication>
 #include <QMainWindow>
 #include <QPushButton>
 #include <QGridLayout>
+#include <QtGui>
+#include <QApplication>
 #include <QMouseEvent>
 #include <QIcon>
 #include <iostream>
 #include <random>
-#include <vector>
-#include <MainWindow.h>
-#include <MyButton.h>
+#include <set>
+#include "MyButton.h"
+#include "MainWindow.h"
 
 using namespace std;
 
@@ -32,10 +32,6 @@ MainWindow :: MainWindow(QWidget *parent) : QMainWindow(parent){
         int random_integer = uniform_int_distribution<int>(0, ROWS * COLUMNS)(gen);
         bombPositions.insert(random_integer);
     }
-
-	for(const auto& elem : bombPositions){
-		qDebug() << elem;
-	}
 
 
 	// Create the button grid, make "this" the parent

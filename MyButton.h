@@ -5,6 +5,9 @@ date Feb 6, 2024
 
 */
 
+#ifndef MY_BUTTON_H
+#define MY_BUTTON_H
+
 #include <QtWidgets>
 #include <QPushButton>
 #include <QMouseEvent>
@@ -25,3 +28,6 @@ protected:
 	void mousePressEvent(QMouseEvent *event) override;
 	
 };
+
+
+#endif

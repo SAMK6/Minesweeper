@@ -53,13 +53,17 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = MainWindow.cpp \
+		MenuScreen.cpp \
 		minesweeper.cpp \
 		MyButton.cpp moc_MainWindow.cpp \
+		moc_MenuScreen.cpp \
 		moc_MyButton.cpp
 OBJECTS       = MainWindow.o \
+		MenuScreen.o \
 		minesweeper.o \
 		MyButton.o \
 		moc_MainWindow.o \
+		moc_MenuScreen.o \
 		moc_MyButton.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/common/unix.conf \
@@ -106,7 +110,6 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/spec_post.prf \
-		.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/default_pre.prf \
@@ -127,7 +130,9 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/lex.prf \
 		Minesweeper.pro MainWindow.h \
+		MenuScreen.h \
 		MyButton.h MainWindow.cpp \
+		MenuScreen.cpp \
 		minesweeper.cpp \
 		MyButton.cpp
 QMAKE_TARGET  = Minesweeper
@@ -186,7 +191,6 @@ Makefile: Minesweeper.pro /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++/qmake.
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/spec_post.prf \
-		.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/default_pre.prf \
@@ -256,7 +260,6 @@ Makefile: Minesweeper.pro /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++/qmake.
 /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/qt_config.prf:
 /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++/qmake.conf:
 /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/spec_post.prf:
-.qmake.stash:
 /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/exclusive_builds.prf:
 /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/toolchain.prf:
 /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/default_pre.prf:
@@ -295,8 +298,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents MainWindow.h MyButton.h $(DISTDIR)/
-	$(COPY_FILE) --parents MainWindow.cpp minesweeper.cpp MyButton.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents MainWindow.h MenuScreen.h MyButton.h $(DISTDIR)/
+	$(COPY_FILE) --parents MainWindow.cpp MenuScreen.cpp minesweeper.cpp MyButton.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -328,18 +331,26 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -Wall -Wextra -fPIC -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_MainWindow.cpp moc_MyButton.cpp
+compiler_moc_header_make_all: moc_MainWindow.cpp moc_MenuScreen.cpp moc_MyButton.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_MainWindow.cpp moc_MyButton.cpp
+	-$(DEL_FILE) moc_MainWindow.cpp moc_MenuScreen.cpp moc_MyButton.cpp
 moc_MainWindow.cpp: MainWindow.h \
+		MyButton.h \
 		moc_predefs.h \
 		/usr/lib/qt6/libexec/moc
-	/usr/lib/qt6/libexec/moc $(DEFINES) --include /home/sam/Desktop/Minesweeper/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -I/home/sam/Desktop/Minesweeper -I/home/sam/Desktop/Minesweeper -I/usr/include/x86_64-linux-gnu/qt6 -I/usr/include/x86_64-linux-gnu/qt6/QtWidgets -I/usr/include/x86_64-linux-gnu/qt6/QtGui -I/usr/include/x86_64-linux-gnu/qt6/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include MainWindow.h -o moc_MainWindow.cpp
+	/usr/lib/qt6/libexec/moc $(DEFINES) --include /home/sam/Desktop/Minesweeper/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -I/home/sam/Desktop/Minesweeper -I/home/sam/Desktop/Minesweeper -I/usr/include/x86_64-linux-gnu/qt6 -I/usr/include/x86_64-linux-gnu/qt6/QtWidgets -I/usr/include/x86_64-linux-gnu/qt6/QtGui -I/usr/include/x86_64-linux-gnu/qt6/QtCore -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include MainWindow.h -o moc_MainWindow.cpp
+
+moc_MenuScreen.cpp: MenuScreen.h \
+		MainWindow.h \
+		MyButton.h \
+		moc_predefs.h \
+		/usr/lib/qt6/libexec/moc
+	/usr/lib/qt6/libexec/moc $(DEFINES) --include /home/sam/Desktop/Minesweeper/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -I/home/sam/Desktop/Minesweeper -I/home/sam/Desktop/Minesweeper -I/usr/include/x86_64-linux-gnu/qt6 -I/usr/include/x86_64-linux-gnu/qt6/QtWidgets -I/usr/include/x86_64-linux-gnu/qt6/QtGui -I/usr/include/x86_64-linux-gnu/qt6/QtCore -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include MenuScreen.h -o moc_MenuScreen.cpp
 
 moc_MyButton.cpp: MyButton.h \
 		moc_predefs.h \
 		/usr/lib/qt6/libexec/moc
-	/usr/lib/qt6/libexec/moc $(DEFINES) --include /home/sam/Desktop/Minesweeper/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -I/home/sam/Desktop/Minesweeper -I/home/sam/Desktop/Minesweeper -I/usr/include/x86_64-linux-gnu/qt6 -I/usr/include/x86_64-linux-gnu/qt6/QtWidgets -I/usr/include/x86_64-linux-gnu/qt6/QtGui -I/usr/include/x86_64-linux-gnu/qt6/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include MyButton.h -o moc_MyButton.cpp
+	/usr/lib/qt6/libexec/moc $(DEFINES) --include /home/sam/Desktop/Minesweeper/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -I/home/sam/Desktop/Minesweeper -I/home/sam/Desktop/Minesweeper -I/usr/include/x86_64-linux-gnu/qt6 -I/usr/include/x86_64-linux-gnu/qt6/QtWidgets -I/usr/include/x86_64-linux-gnu/qt6/QtGui -I/usr/include/x86_64-linux-gnu/qt6/QtCore -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include MyButton.h -o moc_MyButton.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -357,11 +368,18 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 
 ####### Compile
 
-MainWindow.o: MainWindow.cpp MainWindow.h \
-		MyButton.h
+MainWindow.o: MainWindow.cpp MyButton.h \
+		MainWindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MainWindow.o MainWindow.cpp
 
-minesweeper.o: minesweeper.cpp MainWindow.h
+MenuScreen.o: MenuScreen.cpp MainWindow.h \
+		MyButton.h \
+		MenuScreen.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MenuScreen.o MenuScreen.cpp
+
+minesweeper.o: minesweeper.cpp MainWindow.h \
+		MyButton.h \
+		MenuScreen.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o minesweeper.o minesweeper.cpp
 
 MyButton.o: MyButton.cpp MyButton.h
@@ -369,6 +387,9 @@ MyButton.o: MyButton.cpp MyButton.h
 
 moc_MainWindow.o: moc_MainWindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_MainWindow.o moc_MainWindow.cpp
+
+moc_MenuScreen.o: moc_MenuScreen.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_MenuScreen.o moc_MenuScreen.cpp
 
 moc_MyButton.o: moc_MyButton.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_MyButton.o moc_MyButton.cpp

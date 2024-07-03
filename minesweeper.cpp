@@ -8,7 +8,8 @@ date Feb 6, 2024
 #include <QtGui>
 #include <QApplication>
 #include <QMainWindow>
-#include <MainWindow.h>
+#include "MainWindow.h"
+#include "MenuScreen.h"
 
 // this file will act as the main file 
 
@@ -16,29 +17,14 @@ date Feb 6, 2024
 using namespace std;
 
 
+int main(int argc, char* argv[]){
 
 
-int mineSweeper(int numArgs, char* args[]){
+	QApplication app(argc, argv);
+	MenuScreen menu;
 
-
-	QApplication app(numArgs, args);
-	MainWindow GameWindow;
-
-    GameWindow.setGeometry(200, 200, 1500, 800);
-	GameWindow.setFixedSize(1500, 800);
-	GameWindow.show();
-	
-	
+	menu.show();
 	
 	return app.exec();
-
-}
-
-
-
-
-int main(int argc, char* argv[]){
-	
-	return mineSweeper(argc, argv);
 	
 }

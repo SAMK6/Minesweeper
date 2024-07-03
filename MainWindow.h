@@ -5,11 +5,20 @@ date Feb 6, 2024
 
 */
 
+#ifndef MAIN_WINDOW_H
+#define MAIN_WINDOW_H
+
 #include <QMainWindow>
 #include <QPushButton>
-#include <QMainWindow>
 #include <QGridLayout>
+#include <QtGui>
+#include <QApplication>
+#include <QMouseEvent>
+#include <QIcon>
+#include <iostream>
+#include <random>
 #include <set>
+#include "MyButton.h"
 
 using namespace std;
 
@@ -44,3 +53,6 @@ private:
 	
 };
 
+
+
+#endif
