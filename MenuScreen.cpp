@@ -11,6 +11,7 @@ date Feb 6, 2024
 #include <QMainWindow>
 #include <QPushButton>
 #include <QGridLayout>
+#include <QScreen>
 #include <iostream>
 #include "MainWindow.h"
 #include "MenuScreen.h"
@@ -30,7 +31,14 @@ MenuScreen :: MenuScreen(QWidget *parent) : QMainWindow(parent){
     QWidget *centralWidget = new QWidget(this);
     centralWidget->setLayout(menu);
     setCentralWidget(centralWidget);
-    this->setGeometry(300, 300, 400, 200);
+
+    QScreen *primaryScreen = QGuiApplication::primaryScreen();
+    QRect screenGeometry = primaryScreen->geometry();
+
+    int x = screenGeometry.center().x() - width() / 2;
+    int y = screenGeometry.center().y() - height() / 2;
+
+    this->setGeometry(x, y, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 }
 
@@ -38,9 +46,6 @@ MenuScreen :: MenuScreen(QWidget *parent) : QMainWindow(parent){
 void MenuScreen :: startGame(){	
 	
     MainWindow *GameWindow = new MainWindow(nullptr);
-
-    GameWindow->setGeometry(200, 200, 1500, 800);
-	GameWindow->setFixedSize(1500, 800);
 
     GameWindow->show();
 

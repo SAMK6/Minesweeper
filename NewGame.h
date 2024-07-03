@@ -36,8 +36,10 @@ private:
 	QLayout* buttons;
     QLayout* menu;
     QWidget* buttonWig;
-    QWidget* labelWig;
     QWidget* centralWidget;
+
+    const int WINDOW_HEIGHT = 130;
+	const int WINDOW_WIDTH = 400;
 
 };
 

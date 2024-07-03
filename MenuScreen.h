@@ -31,6 +31,8 @@ private:
 
 	QLayout* menu;
 
+	const int WINDOW_HEIGHT = 200;
+	const int WINDOW_WIDTH = 400;
 	
 	
 };

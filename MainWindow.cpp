@@ -68,7 +68,15 @@ MainWindow :: MainWindow(QWidget *parent) : QMainWindow(parent){
 
 
 	}
-  	
+
+	QScreen *primaryScreen = QGuiApplication::primaryScreen();
+    QRect screenGeometry = primaryScreen->geometry();
+
+    int x = screenGeometry.center().x() - BUTTON_SIZE*COLUMNS / 2;
+    int y = screenGeometry.center().y() - BUTTON_SIZE*ROWS / 2;
+
+	this->setGeometry(x, y, BUTTON_SIZE*COLUMNS, BUTTON_SIZE*ROWS);
+  	this->setFixedSize(BUTTON_SIZE*COLUMNS, BUTTON_SIZE*ROWS);
   
 }
 

@@ -114,6 +114,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/default_pre.prf \
@@ -197,6 +198,7 @@ Makefile: Minesweeper.pro /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++/qmake.
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/default_pre.prf \
@@ -266,6 +268,7 @@ Makefile: Minesweeper.pro /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++/qmake.
 /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/qt_config.prf:
 /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++/qmake.conf:
 /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/exclusive_builds.prf:
 /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/toolchain.prf:
 /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/default_pre.prf:
@@ -401,7 +404,8 @@ MyButton.o: MyButton.cpp MyButton.h
 
 NewGame.o: NewGame.cpp MainWindow.h \
 		MyButton.h \
-		MenuScreen.h
+		MenuScreen.h \
+		NewGame.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o NewGame.o NewGame.cpp
 
 moc_MainWindow.o: moc_MainWindow.cpp 
