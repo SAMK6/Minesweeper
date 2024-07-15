@@ -224,7 +224,7 @@ void MainWindow :: handleRightButton(){
 			
 		}
 		else{
-			button->setIcon(QIcon("mine_flag.png"));
+			button->setIcon(QIcon(":/mine_flag.png"));
 			QSize buttonSize = button->size();
 			QSize iconSize(buttonSize.width() - 2 * BUTTON_BORDER_SIZE, buttonSize.height() - 2 * BUTTON_BORDER_SIZE);
 			button->setIconSize(iconSize);
@@ -266,11 +266,14 @@ void MainWindow :: handleLeftButton(){
 	auto it = bombPositions.find(position);
 	if (it != bombPositions.end()){
 		
-		button->setIcon(QIcon("bomb_explode.png"));
+		// show the exploded bomb etc
+		button->setIcon(QIcon(":/bomb_explode.png"));
 		QSize buttonSize = button->size();
 		QSize iconSize(buttonSize.width() - 2 * BUTTON_BORDER_SIZE, buttonSize.height() - 2 * BUTTON_BORDER_SIZE);
 		button->setIconSize(iconSize);
 		button->setProperty("isPressed", 1);
+
+		// now reveal all unexploded bombs
 		
 		NewGame* newGameMenu = new NewGame(nullptr, this);
 		newGameMenu->show();
