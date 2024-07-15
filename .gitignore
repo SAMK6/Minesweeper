@@ -1,0 +1,6 @@
+.DS_Store
+.qmake.stash
+.vscode
+Makefile
+Minesweeper
+Minesweeper.pro

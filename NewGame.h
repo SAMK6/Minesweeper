@@ -22,7 +22,7 @@ class NewGame : public QMainWindow {
 	
 public:
 
-	explicit NewGame(QWidget *parent = nullptr);
+	explicit NewGame(QWidget* parent = nullptr, QWidget* prevGame = nullptr);
 	
 private slots:
 	void newGame();
@@ -37,6 +37,7 @@ private:
     QLayout* menu;
     QWidget* buttonWig;
     QWidget* centralWidget;
+    QWidget* oldGame;
 
     const int WINDOW_HEIGHT = 130;
 	const int WINDOW_WIDTH = 400;

@@ -19,10 +19,12 @@ date Feb 6, 2024
 
 
 
-NewGame :: NewGame(QWidget* parent) : QMainWindow(parent){
+NewGame :: NewGame(QWidget* parent, QWidget* prevGame) : QMainWindow(parent){
 
 
-    setWindowTitle("Uh-Oh!");    
+    setWindowTitle("Uh-Oh!");
+
+    oldGame = prevGame;
     
     centralWidget = new QWidget(this);
 
@@ -75,6 +77,8 @@ void NewGame :: newGame(){
 
     GameWindow->show();
 
+    oldGame->close();
+
     close();
 
 
@@ -87,11 +91,15 @@ void NewGame :: mainMenu(){
 
     menuWindow->show();
 
+    oldGame->close();
+
     close();
 
 }
 
 void NewGame :: exitGame(){
+
+    oldGame->close();
 
     close();
 

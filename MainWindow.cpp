@@ -272,11 +272,9 @@ void MainWindow :: handleLeftButton(){
 		button->setIconSize(iconSize);
 		button->setProperty("isPressed", 1);
 		
-		NewGame* newGameMenu = new NewGame(nullptr);
+		NewGame* newGameMenu = new NewGame(nullptr, this);
 		newGameMenu->show();
-		
-		close();
-		
+				
 	}
 	else{ // if it isn't a bomb we start clearing with the recursive helper function		
 
