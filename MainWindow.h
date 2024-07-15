@@ -17,7 +17,6 @@ date Feb 6, 2024
 #include <QIcon>
 #include <iostream>
 #include <random>
-#include <set>
 #include "MyButton.h"
 
 using namespace std;
@@ -38,6 +37,7 @@ private slots:
 private:
 
 	void clear_empty_tiles(QPushButton*);
+	void show_bombs();
 	
 	QGridLayout* buttons;
 
@@ -49,7 +49,7 @@ private:
 	const int ROWS = 16;
 	const int COLUMNS = 30;
 
-	set<int> bombPositions;
+	int gameOver = 0;
 	
 };
 

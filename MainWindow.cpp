@@ -26,6 +26,7 @@ MainWindow :: MainWindow(QWidget *parent) : QMainWindow(parent){
 	// setting up random number generator
 	random_device rd;
     mt19937 gen(rd());
+	set<int> bombPositions;
 
 	// generating a list of positions will the bombs will be
 
@@ -59,6 +60,16 @@ MainWindow :: MainWindow(QWidget *parent) : QMainWindow(parent){
             button->setProperty("column", j);
 			button->setProperty("isPressed", 0);
 			button->setProperty("isFlagged", 0);
+
+
+			auto it = bombPositions.find((i * COLUMNS) + j);
+
+			if (it != bombPositions.end()){
+				button->setProperty("isBomb", 1);			
+			}
+			else{
+				button->setProperty("isBomb", 0);			
+			}
 			
 			
 			// add the button to the layout
@@ -124,9 +135,13 @@ void MainWindow :: clear_empty_tiles(QPushButton* button){
 	
 	// in this loop we go over all the adjacent tiles and see which ones are bombs incrementing the counter each time we find a bomb
 	for (int num : adjacentTiles){
+
+		int row, column;
+
+		column = num % COLUMNS;
+		row = (num - column)/COLUMNS;
 		
-		auto it = bombPositions.find(num);
-		if (it != bombPositions.end()){
+		if (qobject_cast<QPushButton*>(buttons->itemAtPosition(row, column)->widget())->property("isBomb").toInt()){
 			numAdjacent++;			
 		}
 		
@@ -145,8 +160,8 @@ void MainWindow :: clear_empty_tiles(QPushButton* button){
 			int row, column;
 			
 			// calculate the row and column of the button based on its flattened position
-			row = (num - (num % COLUMNS))/COLUMNS;
 			column = num % COLUMNS;
+			row = (num - column)/COLUMNS;
 
 			// get the pointer to the button
 			QLayoutItem* item = buttons->itemAtPosition(row, column);
@@ -202,8 +217,51 @@ void MainWindow :: clear_empty_tiles(QPushButton* button){
 	
 }
 
+
+void MainWindow :: show_bombs(){
+
+	for(int i = 0; i < ROWS * COLUMNS; i++){
+
+		int column = i % COLUMNS;
+		int row = (i - column)/COLUMNS;
+
+		// get the pointer to the button
+		QLayoutItem* item = buttons->itemAtPosition(row, column);
+		QPushButton* button = qobject_cast<QPushButton*>(item->widget());
+
+		if(button->property("isPressed").toInt()){
+			continue;
+		}
+
+		if(button->property("isFlagged").toInt()){
+			if(button->property("isBomb").toInt()){
+				// it was flagged correcty do nothing
+			}
+			else{
+				// this square was incorrectly flagged
+				button->setIcon(QIcon());
+				button->setStyleSheet(QString("QPushButton {    font-weight: bold;    background-color: #000000;    border: %1px solid #333333;    color: #000000;   }").arg(BUTTON_BORDER_SIZE));
+			}
+		}
+		else{
+			if(button->property("isBomb").toInt()){
+				button->setIcon(QIcon(":/bomb_unexploded.png"));
+				QSize buttonSize = button->size();
+				QSize iconSize(buttonSize.width() - 2 * BUTTON_BORDER_SIZE, buttonSize.height() - 2 * BUTTON_BORDER_SIZE);
+				button->setIconSize(iconSize);
+			}
+		}
+	}
+
+
+}
+
 // function to handle right clicks
 void MainWindow :: handleRightButton(){
+
+	if(gameOver){
+		return;
+	}
 	
 	QPushButton* button = qobject_cast<QPushButton*>(sender());
 	
@@ -237,22 +295,25 @@ void MainWindow :: handleRightButton(){
 // function to handle left clicks
 void MainWindow :: handleLeftButton(){
 
+	if(gameOver){
+		return;
+	}
+
 	
 	// get the button/tile they pushed
 	QPushButton* button = qobject_cast<QPushButton*>(sender());
 
-	// catch null pointers and setup variables
-	int row, column, position;
+	if(button->property("isFlagged").toInt()){
+		return;
+	}
+
+	// catch null pointers
 	if (button) {
 		
 		// if this button has been pressed before do nothing
 		if(button->property("isPressed").toInt()){
 			return;
 		}
-				
-		row = button->property("row").toInt();
-		column = button->property("column").toInt();
-		position = COLUMNS * row + column;
 		
 	}
 	else{
@@ -263,8 +324,7 @@ void MainWindow :: handleLeftButton(){
 
 	
 	// see if the button we pressed in a bomb
-	auto it = bombPositions.find(position);
-	if (it != bombPositions.end()){
+	if (button->property("isBomb").toInt()){
 		
 		// show the exploded bomb etc
 		button->setIcon(QIcon(":/bomb_explode.png"));
@@ -273,7 +333,11 @@ void MainWindow :: handleLeftButton(){
 		button->setIconSize(iconSize);
 		button->setProperty("isPressed", 1);
 
+		// set game over
+		gameOver = 1;
+
 		// now reveal all unexploded bombs
+		show_bombs();
 		
 		NewGame* newGameMenu = new NewGame(nullptr, this);
 		newGameMenu->show();
