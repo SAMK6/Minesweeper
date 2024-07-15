@@ -101,32 +101,31 @@ void MainWindow :: clear_empty_tiles(QPushButton* button){
 
 	
 	// indicies for the button 
-	int row = button->property("row").toInt();
-	int column = button->property("column").toInt();
-	int position = COLUMNS * row + column;
+	int bRow = button->property("row").toInt(), bColumn = button->property("column").toInt();
+	int position = COLUMNS * bRow + bColumn;
 	button->setProperty("isPressed", 1);
 	
 	// will fill up adjacent with the positions we could check
 	vector<int> adjacentTiles = {position - COLUMNS + 1, position - COLUMNS, position - COLUMNS - 1, position - 1, position + 1, position + COLUMNS - 1, position + COLUMNS, position + COLUMNS + 1};
 	int numAdjacent = 0;
 	
-	// this clases will remove tiles from the vector of tiles to be check when the tile we're considering is up against a wall
-	if(row == 0){
+	// this clauses will remove tiles from the vector of tiles to be check when the tile we're considering is up against a wall
+	if(bRow == 0){
 		adjacentTiles.erase(remove(adjacentTiles.begin(), adjacentTiles.end(), position - COLUMNS + 1), adjacentTiles.end());		
 		adjacentTiles.erase(remove(adjacentTiles.begin(), adjacentTiles.end(), position - COLUMNS), adjacentTiles.end());		
 		adjacentTiles.erase(remove(adjacentTiles.begin(), adjacentTiles.end(), position - COLUMNS - 1), adjacentTiles.end());		
 	}
-	if(row == ROWS - 1){
+	if(bRow == ROWS - 1){
 		adjacentTiles.erase(remove(adjacentTiles.begin(), adjacentTiles.end(), position + COLUMNS + 1), adjacentTiles.end());		
 		adjacentTiles.erase(remove(adjacentTiles.begin(), adjacentTiles.end(), position + COLUMNS), adjacentTiles.end());		
 		adjacentTiles.erase(remove(adjacentTiles.begin(), adjacentTiles.end(), position + COLUMNS - 1), adjacentTiles.end());		
 	}
-	if(column == 0){
+	if(bColumn == 0){
 		adjacentTiles.erase(remove(adjacentTiles.begin(), adjacentTiles.end(), position - COLUMNS - 1), adjacentTiles.end());		
 		adjacentTiles.erase(remove(adjacentTiles.begin(), adjacentTiles.end(), position - 1), adjacentTiles.end());		
 		adjacentTiles.erase(remove(adjacentTiles.begin(), adjacentTiles.end(), position + COLUMNS - 1), adjacentTiles.end());		
 	}
-	if(column == COLUMNS - 1){
+	if(bColumn == COLUMNS - 1){
 		adjacentTiles.erase(remove(adjacentTiles.begin(), adjacentTiles.end(), position - COLUMNS + 1), adjacentTiles.end());		
 		adjacentTiles.erase(remove(adjacentTiles.begin(), adjacentTiles.end(), position + 1), adjacentTiles.end());		
 		adjacentTiles.erase(remove(adjacentTiles.begin(), adjacentTiles.end(), position + COLUMNS + 1), adjacentTiles.end());		
@@ -295,15 +294,10 @@ void MainWindow :: handleRightButton(){
 // function to handle left clicks
 void MainWindow :: handleLeftButton(){
 
-	if(gameOver){
-		return;
-	}
-
-	
 	// get the button/tile they pushed
 	QPushButton* button = qobject_cast<QPushButton*>(sender());
 
-	if(button->property("isFlagged").toInt()){
+	if(button->property("isFlagged").toInt() || gameOver){
 		return;
 	}
 
