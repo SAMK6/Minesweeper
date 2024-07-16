@@ -237,9 +237,10 @@ void MainWindow :: show_bombs(){
 				// it was flagged correcty do nothing
 			}
 			else{
-				// this square was incorrectly flagged
-				button->setIcon(QIcon());
-				button->setStyleSheet(QString("QPushButton {    font-weight: bold;    background-color: #000000;    border: %1px solid #333333;    color: #000000;   }").arg(BUTTON_BORDER_SIZE));
+				button->setIcon(QIcon(":/no_bomb.png"));
+				QSize buttonSize = button->size();
+				QSize iconSize(buttonSize.width() - 2 * BUTTON_BORDER_SIZE, buttonSize.height() - 2 * BUTTON_BORDER_SIZE);
+				button->setIconSize(iconSize);
 			}
 		}
 		else{
