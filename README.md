@@ -9,13 +9,13 @@ Installing my Minesweeper is simple and can be done with a few simple commands. 
 To Install QT on macOS:
 
 ```
-sudo brew install qt6
+$ sudo brew install qt6
 ```
 
 and on linux:
 
 ```
-sudo apt install qt6-base-dev
+$ sudo apt install qt6-base-dev
 ```
 
 
@@ -24,7 +24,24 @@ sudo apt install qt6-base-dev
 First clone the repository, this can be done with:
 
 ```
-git clone https://github.com/SAMK6/Minesweeper.git
+$ git clone https://github.com/SAMK6/Minesweeper.git
 ```
 
+next navigate to /Minesweeper/src:
+
+```
+$ cd Minesweeper/src
+```
+
+then run the qmake utility to generate the makefile (the project file is already configured):
+
+```
+$ qmake6
+```
+
+finally build the application:
+
+```
+$ make
+```
 
