@@ -26,14 +26,19 @@ public:
 	
 private slots:
 	void startGame();
+	void difficulty_select(const QString);
 
 private:
 
 	QLayout* menu;
+	QPushButton* play;
+	QComboBox *difficulty;
+	QWidget *centralWidget;
 
 	const int WINDOW_HEIGHT = 200;
 	const int WINDOW_WIDTH = 400;
-	
+
+	char DIFFICULTY = 's';
 	
 };
 

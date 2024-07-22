@@ -28,7 +28,7 @@ class MainWindow : public QMainWindow {
 	
 public:
 
-	explicit MainWindow(QWidget *parent = nullptr);
+	explicit MainWindow(QWidget *parent = nullptr, int = 16, int = 30, int = 99);
 
 private slots:
 	void handleRightButton();
@@ -44,10 +44,10 @@ private:
 	const int BUTTON_SIZE = 50;
 	const int BUTTON_BORDER_SIZE = 2;
 
-	const int NUM_BOMBS = 99;
+	int NUM_BOMBS;
 
-	const int ROWS = 16;
-	const int COLUMNS = 30;
+	int ROWS;
+	int COLUMNS;
 
 	int gameOver = 0;
 	

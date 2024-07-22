@@ -19,37 +19,42 @@ date Feb 6, 2024
 
 
 
-NewGame :: NewGame(QWidget* parent, QWidget* prevGame) : QMainWindow(parent){
+NewGame :: NewGame(QWidget* parent, QWidget* prevGame, int rows, int columns, int bombs) : QMainWindow(parent){
+
+    // set difficulty
+	NUM_BOMBS = bombs;
+	ROWS = rows;
+	COLUMNS = columns;
+
+    oldGame = prevGame;
 
 
     setWindowTitle("Uh-Oh!");
-
-    oldGame = prevGame;
     
+    // layout stuff
     centralWidget = new QWidget(this);
-
     menu = new QVBoxLayout(this);
 
-    label = new QLabel("You hit a bomb and exploded!");
+    label = new QLabel("You hit a bomb and exploded!", this);
     label->setAlignment(Qt::AlignCenter);
 
     // setup the buttons
     buttonWig = new QWidget(this);
     buttons = new QHBoxLayout(buttonWig);
 
-    QPushButton* ng = new QPushButton("New Game", this);
+    ng = new QPushButton("New Game", this);
     connect(ng, &QPushButton::clicked, this, &NewGame::newGame);
     buttons->addWidget(ng);
 
-    QPushButton* mm = new QPushButton("Main Menu", this);
+    mm = new QPushButton("Main Menu", this);
     connect(mm, &QPushButton::clicked, this, &NewGame::mainMenu);
     buttons->addWidget(mm);
 
-    QPushButton* eg = new QPushButton("Exit", this);
+    eg = new QPushButton("Exit", this);
     connect(eg, &QPushButton::clicked, this, &NewGame::exitGame);
     buttons->addWidget(eg);
 
-    buttonWig = new QWidget(this);
+    // put the cuttong in a horizontal layout
     buttonWig->setLayout(buttons);
 
     menu->addWidget(label);
@@ -59,6 +64,7 @@ NewGame :: NewGame(QWidget* parent, QWidget* prevGame) : QMainWindow(parent){
     centralWidget->setLayout(menu);
     setCentralWidget(centralWidget);
 
+    // get user screen size etc
     QScreen *primaryScreen = QGuiApplication::primaryScreen();
     QRect screenGeometry = primaryScreen->geometry();
 
@@ -73,7 +79,7 @@ NewGame :: NewGame(QWidget* parent, QWidget* prevGame) : QMainWindow(parent){
 void NewGame :: newGame(){
 
 
-    MainWindow* GameWindow = new MainWindow(nullptr);
+    MainWindow* GameWindow = new MainWindow(nullptr, ROWS, COLUMNS, NUM_BOMBS);
 
     GameWindow->show();
 
@@ -98,9 +104,10 @@ void NewGame :: mainMenu(){
 }
 
 void NewGame :: exitGame(){
-
+    
     oldGame->close();
 
     close();
+
 
 }

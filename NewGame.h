@@ -22,8 +22,8 @@ class NewGame : public QMainWindow {
 	
 public:
 
-	explicit NewGame(QWidget* parent = nullptr, QWidget* prevGame = nullptr);
-	
+	explicit NewGame(QWidget* parent = nullptr, QWidget* prevGame = nullptr, int rows = 16, int columns = 30, int bombs = 99);
+
 private slots:
 	void newGame();
     void mainMenu();
@@ -38,6 +38,14 @@ private:
     QWidget* buttonWig;
     QWidget* centralWidget;
     QWidget* oldGame;
+    QPushButton* ng;
+    QPushButton* mm;
+    QPushButton* eg;
+
+
+    int ROWS;
+    int COLUMNS;
+    int NUM_BOMBS;
 
     const int WINDOW_HEIGHT = 130;
 	const int WINDOW_WIDTH = 400;

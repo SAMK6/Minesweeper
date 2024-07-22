@@ -21,8 +21,16 @@ date Feb 6, 2024
 
 using namespace std;
 
-MainWindow :: MainWindow(QWidget *parent) : QMainWindow(parent){
+MainWindow :: MainWindow(QWidget *parent, int rows, int columns, int bombs) : QMainWindow(parent){
 	
+	// set difficulty
+	NUM_BOMBS = bombs;
+	ROWS = rows;
+	COLUMNS = columns;
+
+	setWindowTitle("Minesweeper");
+
+
 	// setting up random number generator
 	random_device rd;
     mt19937 gen(rd());
@@ -103,7 +111,9 @@ void MainWindow :: clear_empty_tiles(QPushButton* button){
 	// indicies for the button 
 	int bRow = button->property("row").toInt(), bColumn = button->property("column").toInt();
 	int position = COLUMNS * bRow + bColumn;
-	button->setProperty("isPressed", 1);
+	if(!button->property("isFlagged").toInt()){
+		button->setProperty("isPressed", 1);
+	}
 	
 	// will fill up adjacent with the positions we could check
 	vector<int> adjacentTiles = {position - COLUMNS + 1, position - COLUMNS, position - COLUMNS - 1, position - 1, position + 1, position + COLUMNS - 1, position + COLUMNS, position + COLUMNS + 1};
@@ -152,7 +162,11 @@ void MainWindow :: clear_empty_tiles(QPushButton* button){
 
 		
 		// set it to grey to mark it as 0
-		button->setStyleSheet(QString("QPushButton {  background-color: #9a9a9a;    border: %1px solid #333333;    color: #0000cc;   }").arg(BUTTON_BORDER_SIZE));
+
+		if(!button->property("isFlagged").toInt()){
+			button->setStyleSheet(QString("QPushButton {  background-color: #9a9a9a;    border: %1px solid #333333;    color: #0000cc;   }").arg(BUTTON_BORDER_SIZE));
+		}
+	
 	
 		for (int num : adjacentTiles){
 			
@@ -174,7 +188,7 @@ void MainWindow :: clear_empty_tiles(QPushButton* button){
 		}
 		
 	}
-	else{
+	else if(!button->property("isFlagged").toInt()){
 		// setting the colours for the numbers basically guessed these colours
 
 		switch(numAdjacent){
@@ -334,7 +348,7 @@ void MainWindow :: handleLeftButton(){
 		// now reveal all unexploded bombs
 		show_bombs();
 		
-		NewGame* newGameMenu = new NewGame(nullptr, this);
+		NewGame* newGameMenu = new NewGame(nullptr, this, ROWS, COLUMNS, NUM_BOMBS);
 		newGameMenu->show();
 				
 	}
