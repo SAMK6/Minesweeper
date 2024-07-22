@@ -48,6 +48,8 @@ private:
 	int ROWS;
 	int COLUMNS;
 
+	int numPressed = 0;
+
 	int gameOver = 0;
 	
 };

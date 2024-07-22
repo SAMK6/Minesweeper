@@ -17,6 +17,7 @@ author Sam Feldman
 #include "MyButton.h"
 #include "MainWindow.h"
 #include "NewGame.h"
+#include <QDebug>
 
 using namespace std;
 
@@ -112,6 +113,7 @@ void MainWindow :: clear_empty_tiles(QPushButton* button){
 	int position = COLUMNS * bRow + bColumn;
 	if(!button->property("isFlagged").toInt()){
 		button->setProperty("isPressed", 1);
+		numPressed++;
 	}
 	
 	// will fill up adjacent with the positions we could check
@@ -340,6 +342,7 @@ void MainWindow :: handleLeftButton(){
 		QSize iconSize(buttonSize.width() - 2 * BUTTON_BORDER_SIZE, buttonSize.height() - 2 * BUTTON_BORDER_SIZE);
 		button->setIconSize(iconSize);
 		button->setProperty("isPressed", 1);
+		numPressed++;
 
 		// set game over
 		gameOver = 1;
@@ -347,13 +350,44 @@ void MainWindow :: handleLeftButton(){
 		// now reveal all unexploded bombs
 		show_bombs();
 		
-		NewGame* newGameMenu = new NewGame(nullptr, this, ROWS, COLUMNS, NUM_BOMBS);
+		NewGame* newGameMenu = new NewGame(nullptr, this, 0, ROWS, COLUMNS, NUM_BOMBS);
 		newGameMenu->show();
 				
 	}
 	else{ // if it isn't a bomb we start clearing with the recursive helper function		
 
 		clear_empty_tiles(button);
+
+		if(numPressed == ROWS * COLUMNS - NUM_BOMBS){ // see if they won
+			
+			// set game over
+			gameOver = 1;
+
+			for(int i = 0; i < ROWS * COLUMNS; i++){
+
+				int column = i % COLUMNS;
+				int row = (i - column)/COLUMNS;
+
+				// get the pointer to the button
+				QLayoutItem* item = buttons->itemAtPosition(row, column);
+				QPushButton* button = qobject_cast<QPushButton*>(item->widget());
+
+				// since all the non bomb positions were found even if there are unflagged positions they must be bombs so we can reveal that
+				// this is how it works in original minsweeper
+				if(button->property("isBomb").toInt()){
+					button->setIcon(QIcon(":images/mine_flag.png"));
+					QSize buttonSize = button->size();
+					QSize iconSize(buttonSize.width() - 2 * BUTTON_BORDER_SIZE, buttonSize.height() - 2 * BUTTON_BORDER_SIZE);
+					button->setIconSize(iconSize);
+				}
+				
+			}
+
+			// give a new game window
+			NewGame* newGameMenu = new NewGame(nullptr, this, 1, ROWS, COLUMNS, NUM_BOMBS);
+			newGameMenu->show();
+
+		}
 
 	}
 

@@ -21,7 +21,7 @@ class NewGame : public QMainWindow {
 	
 public:
 
-	explicit NewGame(QWidget* parent = nullptr, QWidget* prevGame = nullptr, int rows = 16, int columns = 30, int bombs = 99);
+	explicit NewGame(QWidget* parent = nullptr, QWidget* prevGame = nullptr, int prevGameWinner = 0, int rows = 16, int columns = 30, int bombs = 99);
 
 private slots:
 	void newGame();

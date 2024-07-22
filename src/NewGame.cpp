@@ -17,7 +17,7 @@ author Sam Feldman
 #include "NewGame.h"
 
 
-NewGame :: NewGame(QWidget* parent, QWidget* prevGame, int rows, int columns, int bombs) : QMainWindow(parent){
+NewGame :: NewGame(QWidget* parent, QWidget* prevGame, int prevGameWinner, int rows, int columns, int bombs) : QMainWindow(parent){
 
     // set difficulty
 	NUM_BOMBS = bombs;
@@ -26,15 +26,20 @@ NewGame :: NewGame(QWidget* parent, QWidget* prevGame, int rows, int columns, in
 
     oldGame = prevGame;
 
+    if(prevGameWinner){
+        setWindowTitle("Congratulations!");
+        label = new QLabel("You found all the mines and escaped!", this);
+    }
+    else{
+        setWindowTitle("Uh-Oh!");
+        label = new QLabel("You hit a bomb and exploded!", this);
+    }
+    label->setAlignment(Qt::AlignCenter);
 
-    setWindowTitle("Uh-Oh!");
-    
     // layout stuff
     centralWidget = new QWidget(this);
     menu = new QVBoxLayout(this);
 
-    label = new QLabel("You hit a bomb and exploded!", this);
-    label->setAlignment(Qt::AlignCenter);
 
     // setup the buttons
     buttonWig = new QWidget(this);
