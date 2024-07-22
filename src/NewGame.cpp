@@ -17,7 +17,6 @@ author Sam Feldman
 #include "NewGame.h"
 
 
-
 NewGame :: NewGame(QWidget* parent, QWidget* prevGame, int rows, int columns, int bombs) : QMainWindow(parent){
 
     // set difficulty
