@@ -1,4 +1,4 @@
-# Modern Minesweeper Clone
+# Modern Minesweeper
 
 ## Installation instructions
 
@@ -24,4 +24,7 @@ sudo apt install qt6-base-dev
 First clone the repository, this can be done with:
 
 ```
-git clone 
+git clone https://github.com/SAMK6/Minesweeper.git
+```
+
+
