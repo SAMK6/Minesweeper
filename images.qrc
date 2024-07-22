@@ -1,8 +1,0 @@
-<RCC>
-    <qresource>
-        <file>images/mine_flag.png</file>
-        <file>images/bomb_explode.png</file>
-        <file>images/bomb_unexploded.png</file>
-        <file>images/no_bomb.png</file>
-    </qresource>
-</RCC>
