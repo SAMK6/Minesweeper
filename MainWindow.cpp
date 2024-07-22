@@ -251,7 +251,7 @@ void MainWindow :: show_bombs(){
 				// it was flagged correcty do nothing
 			}
 			else{
-				button->setIcon(QIcon(":/no_bomb.png"));
+				button->setIcon(QIcon(":images/no_bomb.png"));
 				QSize buttonSize = button->size();
 				QSize iconSize(buttonSize.width() - 2 * BUTTON_BORDER_SIZE, buttonSize.height() - 2 * BUTTON_BORDER_SIZE);
 				button->setIconSize(iconSize);
@@ -259,7 +259,7 @@ void MainWindow :: show_bombs(){
 		}
 		else{
 			if(button->property("isBomb").toInt()){
-				button->setIcon(QIcon(":/bomb_unexploded.png"));
+				button->setIcon(QIcon(":images/bomb_unexploded.png"));
 				QSize buttonSize = button->size();
 				QSize iconSize(buttonSize.width() - 2 * BUTTON_BORDER_SIZE, buttonSize.height() - 2 * BUTTON_BORDER_SIZE);
 				button->setIconSize(iconSize);
@@ -296,7 +296,7 @@ void MainWindow :: handleRightButton(){
 			
 		}
 		else{
-			button->setIcon(QIcon(":/mine_flag.png"));
+			button->setIcon(QIcon(":images/mine_flag.png"));
 			QSize buttonSize = button->size();
 			QSize iconSize(buttonSize.width() - 2 * BUTTON_BORDER_SIZE, buttonSize.height() - 2 * BUTTON_BORDER_SIZE);
 			button->setIconSize(iconSize);
@@ -336,7 +336,7 @@ void MainWindow :: handleLeftButton(){
 	if (button->property("isBomb").toInt()){
 		
 		// show the exploded bomb etc
-		button->setIcon(QIcon(":/bomb_explode.png"));
+		button->setIcon(QIcon(":images/bomb_explode.png"));
 		QSize buttonSize = button->size();
 		QSize iconSize(buttonSize.width() - 2 * BUTTON_BORDER_SIZE, buttonSize.height() - 2 * BUTTON_BORDER_SIZE);
 		button->setIconSize(iconSize);
