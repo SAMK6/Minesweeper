@@ -45,3 +45,4 @@ finally build the application:
 $ make
 ```
 
+If all steps were successful there will be an application called Minesweeper in Minesweeper/src ready to go, enjoy!
