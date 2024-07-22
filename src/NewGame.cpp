@@ -1,7 +1,6 @@
 /* 
 author Sam Feldman
 
-date Feb 6, 2024
 
 */
 
@@ -78,26 +77,26 @@ NewGame :: NewGame(QWidget* parent, QWidget* prevGame, int rows, int columns, in
 
 void NewGame :: newGame(){
 
-
+    // start a new game 
     MainWindow* GameWindow = new MainWindow(nullptr, ROWS, COLUMNS, NUM_BOMBS);
 
     GameWindow->show();
 
-    oldGame->close();
+    delete(oldGame); // to avoid memory leaks
 
     close();
-
 
 }
 
 
 void NewGame :: mainMenu(){
 
+    // go back to the main menu
     MenuScreen* menuWindow = new MenuScreen(nullptr);
 
     menuWindow->show();
 
-    oldGame->close();
+    delete(oldGame); // free the old game memeory
 
     close();
 
@@ -105,9 +104,8 @@ void NewGame :: mainMenu(){
 
 void NewGame :: exitGame(){
     
-    oldGame->close();
+    delete(oldGame);
 
     close();
-
 
 }
