@@ -11,6 +11,7 @@ To Install QT on macOS:
 ```
 sudo brew install qt6
 ```
+
 and on linux:
 
 ```
@@ -20,4 +21,7 @@ sudo apt install qt6-base-dev
 
 ### Installing the Game
 
-First clone the repository, this can be done with 
+First clone the repository, this can be done with:
+
+```
+git clone 
