@@ -6,7 +6,19 @@ Installing my Minesweeper is simple and can be done with a few simple commands. 
 
 ### Installing QT
 
-To Install QT on macOS '''sudo brew install qt6''', and on linux '''sudo apt install qt6-base-dev'''.
+To Install QT on macOS
+
+'''
+sudo brew install qt6
+'''
+
+, and on linux 
+
+'''
+sudo apt install qt6-base-dev
+'''
+
+.
 
 ### Installing the Game
 
