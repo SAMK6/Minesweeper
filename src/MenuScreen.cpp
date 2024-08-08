@@ -24,6 +24,14 @@ MenuScreen :: MenuScreen(QWidget *parent) : QMainWindow(parent){
     // create they layout
     menu = new QVBoxLayout(this);
 
+    QLabel *label = new QLabel;
+    label->setText("<p style='font-size: 24px; color: #0033cc; font-weight: bold; '>""Sams Modern Minesweeper Clone</p>");
+    label->setAlignment(Qt::AlignCenter);
+    QFont font("fixedsys", 14);
+    label->setFont(font);
+    
+    menu->addWidget(label);
+
     // setup the button
     play = new QPushButton("Play!", this);
     connect(play, &QPushButton::clicked, this, &MenuScreen::startGame);
